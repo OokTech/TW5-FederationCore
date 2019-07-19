@@ -10,6 +10,8 @@ with this plugin.
 
 !! How do I do anything with this?
 
+The code below is used in [[the fetch demo|$:/plugins/Federation/Federation-core/FetchDemo]]
+
 There are two (or more) wikis. The one you are using is the `local wiki` and
 all the others are `remote wikis`. All the wikis involved must have this
 plugin.

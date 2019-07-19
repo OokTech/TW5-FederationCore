@@ -1,0 +1,59 @@
+title: $:/plugins/Federation/Federation-core/FetchDemo
+caption: FetchDemo
+
+!! Fetching
+
+This is a url you can use for testing: `http://twederation.tiddlyspot.com`
+This filter works for testing: `[!is[system]limit[10]]`
+
+Remote Wiki: <$edit-text tiddler='$:/state/TWederation/FetchTiddlers' field='url' class='tc-edit-texteditor'/>
+
+Filter: <$edit-text tiddler='$:/state/TWederation/FetchTiddlers' field='filter' class='tc-edit-texteditor'/>
+
+<$button>
+  Fetch Some Tiddlers
+  <$action-sendmessage
+    $message='tm-send-request'
+    request_type='request_bundle'
+    url={{$:/state/TWederation/FetchTiddlers!!url}}
+    filter={{$:/state/TWederation/FetchTiddlers!!filter}}
+    bundleName="Look! A Name!"
+  />
+</$button>
+
+This lists the existing bundles that have already been fetched:
+
+<$list filter='[tag[Tiddler Bundle]]'>
+
+</$list>
+
+!! Unbundling
+
+<$select tiddler='$:/state/TWederation/UnbundleName'>
+  <option
+    value=''
+  >
+    No Bundle Selected
+  </option>
+  <$list filter='[tag[Tiddler Bundle]]'>
+    <option>
+      <$view field='title'/>
+    </option>
+  </$list>
+</$select>
+
+<$button>
+  Unbundle Tiddlers
+  <$action-tiddlerbundle
+    $action='unpack'
+    $bundle={{$:/state/TWederation/UnbundleName}}
+  />
+</$button>
+
+Titles in the bundle:
+
+<$list filter='[[$:/TiddlerBundleData/]addsuffix{$:/state/TWederation/UnbundleName}]'>
+  <$list filter='[list<currentTiddler>]'>
+
+  </$list>
+</$list>
