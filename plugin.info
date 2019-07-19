@@ -1,7 +1,7 @@
 {
-	"title": "$:/plugins/Federation/Federation-core",
+	"title": "$:/plugins/Federation/FederationCore",
 	"description": "Federation: The core part of federation",
-	"author": "TWederation",
+	"author": "OokTech",
 	"version": "0.0.2",
 	"core-version": ">=5.1.10",
 	"source": "",

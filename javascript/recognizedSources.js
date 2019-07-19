@@ -1,9 +1,9 @@
 /*\
-title: $:/plugins/Federation/Federation-core/recognizedSources.js
+title: $:/plugins/Federation/FederationCore/recognizedSources.js
 type: application/javascript
 module-type: utils
 
-This is for listing your recognized tiddler sources. You can list sources in the tiddler $:/plugins/Federation/Federation-core/RecognizedSourcesList
+This is for listing your recognized tiddler sources. You can list sources in the tiddler $:/plugins/Federation/FederationCore/RecognizedSourcesList
 
 \*/
 (function(){

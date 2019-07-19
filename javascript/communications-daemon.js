@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/Federation/Federation-core/communications-daemon.js
+title: $:/plugins/Federation/FederationCore/communications-daemon.js
 type: application/javascript
 module-type: startup
 
@@ -25,7 +25,7 @@ This is the background process that is in charge of xmlhttprequests and handling
 	$tw.wiki.PendingCommunicationsRequest = 0;
 
 	// Configuration tiddler
-	var CONFIGURATION_TIDDLER = "$:/plugins/Federation/Federation-core/CommunicationsDaemonSettings";
+	var CONFIGURATION_TIDDLER = "$:/plugins/Federation/FederationCore/CommunicationsDaemonSettings";
 	var configurationTiddler = $tw.wiki.getTiddler(CONFIGURATION_TIDDLER);
 
 	//This function gets called whenever something is added to the communications queue or a response is heard from an outside source to a previous request.

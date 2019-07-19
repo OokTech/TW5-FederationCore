@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/Federation/Federation-core/bundleOptions.js
+title: $:/plugins/Federation/FederationCore/bundleOptions.js
 type: application/javascript
 module-type: utils
 

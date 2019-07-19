@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/Federation/Federation-core/action-tiddlerbundle.js
+title: $:/plugins/Federation/FederationCore/action-tiddlerbundle.js
 type: application/javascript
 module-type: widget
 
