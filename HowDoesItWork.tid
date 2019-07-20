@@ -1,0 +1,59 @@
+title: $:/plugins/Federation/Federation-core/HowDoesItWork
+caption: How does it work?
+
+!! How does TWederation work?
+
+This is a quick and incomplete description of the back-end parts.
+
+!!! Who is this for?
+
+This is a more in-depths discussion than is required for most peope.
+This is only for people who are curious about how TWederation works on the back-
+end and for developers who want to know how it works to copy parts of it or
+extend it.
+
+!!! The basic idea
+
+Each wiki is accessible as a static html file.
+The wikis can be on the local machine, served by a static file server or built
+on demand like some of the more advanced features of the Bob server.
+As long as when the browser loads the wiki it is an html file than it will
+work.
+
+For any single communication action there are two wikis involved, the
+`local wiki` which is the wiki fetching tiddlers and that initiating the
+communication, and the `remote wiki` which is the wiki that tiddlers are being
+fetched from.
+
+Both the local and remote wikis must have the FederationCore plugin.
+The local wikis creates an invisible iframe and loads the remote wiki inside it.
+The FederationCore plugin adds a daemon process to the loaded wikis that adds
+handlers for browser messaging across the iframe boundary.
+
+Then the local wiki sends a message to the remote wiki through the iframe
+requesting tiddlers and the wiki inside the iframe packages the requested
+tiddlers into a bundle and sends a message through the iframe to the local wiki
+that contains a bundle with the requested tiddlers.
+The local wiki saves this bundle to be unpacked later.
+
+!!! More detail
+
+!!!! The iframe
+
+The remote wiki is loaded from wherever it is being served and put into an
+iframe.
+This is because for the messaging to work the wiki has to be fully loaded and
+boot so that the messaging daemon process starts running for the remote wiki.
+
+!!!! Browser messaging
+
+Communication through the iframe border is done using the `postMessage`
+function and the messages are received as `message` events.
+
+The messages currently used have a `verb` that lists what type of message it
+is. This should probably be changed.
+
+!!!! http/https problems
+
+Browser security restrictions make it so that you can not load content into an
+iframe that is served over http if the containing page is served using https.

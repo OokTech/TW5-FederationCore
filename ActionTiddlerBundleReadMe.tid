@@ -16,6 +16,7 @@ Usage:
 |$separator |The separator string used between tiddlers in the bundle (optional)|
 |$action |Pack (create bundle) or unpack (unpack tiddlers) (Default: `Pack`)|
 |$type |`Tiddler` or `JSON` (Default: `Tiddler`) |
+|$delete |When unpacking a bundle, if this is set to `true` the bundle will be deleted after it is unpacked. (default: `false`) |
 
 
 !! What does `$type` mean?

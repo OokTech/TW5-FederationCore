@@ -16,6 +16,7 @@ Usage:
 |$separator |The separator string used between tiddlers in the bundle |
 |$action |Pack (create bundle) or unpack (unpack tiddlers) (Default: `Pack`)|
 |$type |`Tiddler` or `JSON` (Default: `Tiddler`) |
+|$delete |When unpacking a bundle, if this is set to `true` the bundle will be deleted after it is unpacked. (default: `false`) |
 
 \*/
 
@@ -54,6 +55,7 @@ ActionTiddlerBundle.prototype.execute = function() {
 	this.actionSeparator = this.getAttribute("$separator");
 	this.actionAction = this.getAttribute("$action");
 	this.bundleType = this.getAttribute("$type");
+	this.deleteBundle = this.getAttribute("$delete", "false");
 };
 
 /*
@@ -61,7 +63,7 @@ Refresh the widget by ensuring our attributes are up to date
 */
 ActionTiddlerBundle.prototype.refresh = function(changedTiddlers) {
 	var changedAttributes = this.computeAttributes();
-	if(changedAttributes["$bundle"] || changedAttributes["$filter"] || changedAttributes["$overwrite"] || changedAttributes['$separator'] || changedAttributes['$action']) {
+	if(Object.keys(changedAttributes).length > 0) {
 		this.refreshSelf();
 		return true;
 	}
@@ -169,6 +171,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 					}
 				}
 			}
+			this.wiki.deleteTiddler(this.actionBundle)
 		}
 	}
 	return true; // Action was invoked
