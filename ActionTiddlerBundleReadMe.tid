@@ -13,8 +13,8 @@ Usage:
 |$bundle |The name of the bundle, either for bundle creation or to select which bundle to unpack. (No default)|
 |$filter |The filter used to select which tiddlers are put into the bundle if making a bundle (No default), or which tiddlers to unpack if unpacking a bundle (Default: `[all[]]`)|
 |$overwrite |Set this to `true` to overwrite existing tiddlers from the bundle, set to `false` to leave existing tiddlers unaffected. (Default: `false`)|
-|$separator |The separator string used between tiddlers in the bundle (optional)|
-|$action |Pack (create bundle) or unpack (unpack tiddlers) (Default: `Pack`)|
+|$separator |The separator string used between tiddlers in the bundle. (Default: `<!-- TIDDLER SEPARATOR --!>`) |
+|$action |This can be set to `pack` to create a bundle or unpack to unpack a bundle. (Default: `pack`)|
 |$type |`Tiddler` or `JSON` (Default: `Tiddler`) |
 |$delete |When unpacking a bundle, if this is set to `true` the bundle will be deleted after it is unpacked. (default: `false`) |
 

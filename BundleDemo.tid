@@ -1,0 +1,95 @@
+title: $:/plugins/Federation/FederationCore/BundleDemo
+caption: Bundle Demo
+
+!! Tiddler Bundles
+
+By default tiddlers are fetched in bundles.
+
+Bundles are tiddlers that contain other tiddlers, similar to plugins.
+Unlike plugins you do not need to reload a wiki when you fetch or otherwise add
+a bundle to it.
+
+Name:
+<$edit-text
+  tiddler='$:/state/FederationCore/BundleDemo'
+  field='bundle_name'
+  class='tc-edit-texteditor'
+/>
+
+Type:
+<$radio
+  tiddler='$:/state/FederationCore/BundleDemo'
+  field='bundle_type'
+  value='Tiddler'
+>
+  Tiddler
+</$radio>
+<$radio
+  tiddler='$:/state/FederationCore/BundleDemo'
+  field='bundle_type'
+  value='JSON'
+>
+  JSON
+</$radio>
+
+Filter:
+<$edit-text
+  tiddler='$:/state/FederationCore/BundleDemo'
+  field='bundle_filter'
+  class='tc-edit-texteditor'
+/>
+
+<$button>
+  Make Bundle
+  <$action-tiddlerbundle
+    $action='pack'
+    $bundle={{$:/state/FederationCore/BundleDemo!!bundle_name}}
+    $filter={{$:/state/FederationCore/BundleDemo!!bundle_filter}}
+    $type={{$:/state/FederationCore/BundleDemo!!bundle_type}}
+  />
+</$button>
+
+!! Existing bundlers
+
+<$list
+  filter='[tag[Tiddler Bundle]]'
+>
+
+</$list>
+
+!! Unbundling
+
+<$select
+  tiddler='$:/state/FederationCore/UnbundleName'
+>
+  <option
+    value=''
+  >
+    No Bundle Selected
+  </option>
+  <$list
+    filter='[tag[Tiddler Bundle]]'
+  >
+    <option>
+      <$view
+        field='title'
+      />
+    </option>
+  </$list>
+</$select>
+
+<$button>
+  Unbundle Tiddlers
+  <$action-tiddlerbundle
+    $action='unpack'
+    $bundle={{$:/state/FederationCore/UnbundleName}}
+  />
+</$button>
+
+Titles in the bundle:
+
+<$list
+  filter='[list{$:/state/FederationCore/UnbundleName}]'
+>
+
+</$list>

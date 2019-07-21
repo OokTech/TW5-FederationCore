@@ -1,4 +1,4 @@
-title: $:/plugins/Federation/Federation-core/ReadMe
+title: $:/plugins/Federation/FederationCore/ReadMe
 caption: ReadMe
 
 !! What is this?
@@ -8,9 +8,14 @@ back-end tools necessary to allow other wikis with this plugin to fetch
 tiddlers from this wiki, or to use this wiki to fetch tiddlers from other wikis
 with this plugin.
 
+This plugin uses the `$action-tiddlerbundle` widget for part of its function.
+See the
+[[readme|$:/plugins/Federation/FederationCore/ActionTiddlerBundleReadMe]] and
+[[demo|$:/plugins/Federation/FederationCore/BundleDemo]] for more about that.
+
 !! How do I do anything with this?
 
-The code below is used in [[the fetch demo|$:/plugins/Federation/Federation-core/FetchDemo]]
+The code below is used in [[the fetch demo|$:/plugins/Federation/FederationCore/FetchDemo]]
 
 There are two (or more) wikis. The one you are using is the `local wiki` and
 all the others are `remote wikis`. All the wikis involved must have this
