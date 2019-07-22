@@ -23,8 +23,8 @@ This is the background process that is in charge of xmlhttprequests and handling
   $tw.wiki.PendingCommunicationsRequest = 0;
 
   // Configuration tiddler
-  //const CONFIGURATION_TIDDLER = "$:/plugins/Federation/FederationCore/CommunicationsDaemonSettings";
-  //const configurationTiddler = $tw.wiki.getTiddler(CONFIGURATION_TIDDLER);
+  const CONFIGURATION_TIDDLER = "$:/plugins/Federation/FederationCore/CommunicationsDaemonSettings";
+  const configurationTiddler = $tw.wiki.getTiddler(CONFIGURATION_TIDDLER);
 
   //This function gets called whenever something is added to the communications queue or a response is heard from an outside source to a previous request.
   function ProcessCommunicationsQueue() {
