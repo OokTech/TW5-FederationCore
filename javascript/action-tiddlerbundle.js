@@ -96,7 +96,8 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
         const currentBundleTiddler = this.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
         // Make the tiddler text and escape any places the separator strings
         // shows up in the tiddler.
-        const tidText = (currentBundleTiddler.getFieldStringBlock({exclude: ["text"]}) + (!!currentBundleTiddler.fields.text ? "\n\n" + currentBundleTiddler.fields.text : "")).replace(separator, '\'+separator)
+				const re = new RegExp(separator, 'g')
+        const tidText = (currentBundleTiddler.getFieldStringBlock({exclude: ["text"]}) + (!!currentBundleTiddler.fields.text ? "\n\n" + currentBundleTiddler.fields.text : "")).replace(re, '\\'+separator)
         bundleText += tidText + '\n' + separator + '\n';
       }
     }
@@ -114,10 +115,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
       type: 'text/plain'
     };
     this.wiki.addTiddler(fields);
-  }
-
-
-  if (this.actionAction === 'unpack') {
+  } else if (this.actionAction === 'unpack') {
     const self = this
     const filterOutput = this.filter ? true:false;
     const unpackList = (filterOutput)? this.wiki.filterTiddlers(this.filter): []
@@ -144,7 +142,11 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
         //Create a tiddler from each tiddler. Only overwrite existing tiddlers if this.actionOverwrite is true
         for (let i = 0; i < rawBundleTiddlers.length; i++) {
           if (rawBundleTiddlers[i].trim() !== '') {
-            const tiddlers = this.wiki.deserializeTiddlers('.tid',rawBundleTiddlers[i].replace('\'+separator,separator));
+						const re = new RegExp('\\\\' + separator, 'g')
+						console.log(re)
+            const tiddlers = this.wiki.deserializeTiddlers('.tid',rawBundleTiddlers[i].replace(re,separator));
+						console.log(rawBundleTiddlers)
+						console.log(tiddlers)
             $tw.utils.each(tiddlers,function(tiddler) {
               if (filterOutput === false || (unpackList.indexOf(tiddler.title) !== -1)) {
                 if (self.actionOverwrite || !self.wiki.getTiddler(tiddler.title)) {

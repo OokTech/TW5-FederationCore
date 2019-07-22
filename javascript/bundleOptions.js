@@ -66,7 +66,8 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
     const currentBundleTiddler = this.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
     // Make the tiddler text and escape any places the separator strings
     // shows up in the tiddler.
-    const tidText = (currentBundleTiddler.getFieldStringBlock({exclude: ["text"]}) + (!!currentBundleTiddler.fields.text ? "\n\n" + currentBundleTiddler.fields.text : "")).replace(separator, '\'+separator)
+		const re = new RegExp(separator, 'g')
+    const tidText = (currentBundleTiddler.getFieldStringBlock({exclude: ["text"]}) + (!!currentBundleTiddler.fields.text ? "\n\n" + currentBundleTiddler.fields.text : "")).replace(re, '\\' + separator)
     bundleText += tidText + '\n' + separator + '\n';
   }
   const Bundle = {
