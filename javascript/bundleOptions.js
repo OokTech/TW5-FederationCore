@@ -56,7 +56,6 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
   const separator = event.data.separator ? event.data.separator : '<!-- TIDDLER SEPARATOR --!>';
   const bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
   const bundleTitle = event.data.bundlename ? event.data.bundlename : "Default Bundle";
-  const bundleList = [];
   const bundleTiddlers = $tw.wiki.filterTiddlers(bundleFilter);
   for (let i = 0; i < bundleTiddlers.length; i++) {
     bundleTiddlers[i] = decodeURI(bundleTiddlers[i]);
@@ -65,7 +64,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
   for (let i = 0; i < bundleTiddlers.length; i++) {
     const currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
     // Make the tiddler text and escape any places the separator strings
-    // shows up in the tiddler. 
+    // shows up in the tiddler.
 		const re = new RegExp(separator, 'g')
     const tidText = (currentBundleTiddler.getFieldStringBlock({exclude: ["text"]}) + (!!currentBundleTiddler.fields.text ? "\n\n" + currentBundleTiddler.fields.text : "")).replace(re, '\\' + separator)
     bundleText += tidText + '\n' + separator + '\n';
@@ -73,7 +72,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
   const Bundle = {
     title: bundleTitle,
     text: bundleText,
-    list: $tw.utils.stringifyList(bundleList),
+    list: $tw.utils.stringifyList(bundleTiddlers),
     tags: '[[Tiddler Bundle]]',
     separator: separator,
     type: 'text/plain',

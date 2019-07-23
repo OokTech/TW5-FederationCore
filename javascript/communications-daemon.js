@@ -131,7 +131,6 @@ This is the background process that is in charge of xmlhttprequests and handling
       } else {
         //The event is placed into the event queue object to be handled by the daemon
         $tw.wiki.event_queue[event.paramObject.url] = {'type':'request_bundle','data':event};
-        console.log($tw.wiki.event_queue);
       }
     };
 
@@ -152,9 +151,6 @@ This is the background process that is in charge of xmlhttprequests and handling
               separator: event.paramObject.separator,
               destination: url,
               bundleFunction: event.paramObject.packingFunction,
-              sender: event.paramObject.sender,
-              recipient: event.paramObject.recipient,
-              previousTime: event.paramObject.previousTime
             }, "*");
           }
         });

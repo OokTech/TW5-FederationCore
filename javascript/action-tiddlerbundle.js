@@ -143,10 +143,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
         for (let i = 0; i < rawBundleTiddlers.length; i++) {
           if (rawBundleTiddlers[i].trim() !== '') {
 						const re = new RegExp('\\\\' + separator, 'g')
-						console.log(re)
             const tiddlers = this.wiki.deserializeTiddlers('.tid',rawBundleTiddlers[i].replace(re,separator));
-						console.log(rawBundleTiddlers)
-						console.log(tiddlers)
             $tw.utils.each(tiddlers,function(tiddler) {
               if (filterOutput === false || (unpackList.indexOf(tiddler.title) !== -1)) {
                 if (self.actionOverwrite || !self.wiki.getTiddler(tiddler.title)) {
