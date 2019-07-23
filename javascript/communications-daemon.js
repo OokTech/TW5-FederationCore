@@ -18,6 +18,7 @@ This is the background process that is in charge of xmlhttprequests and handling
   exports.after = ["startup"];
   exports.synchronous = true;
 
+  $tw.windowMessageHandlers = $tw.windowMessageHandlers || {};
   $tw.wiki.CommunicationsHandlerTypes = $tw.wiki.CommunicationsHandlerTypes || {};
   $tw.wiki.CommunicationsHandler = $tw.wiki.CommunicationsHandler || {};
   $tw.wiki.PendingCommunicationsRequest = 0;
@@ -69,16 +70,6 @@ This is the background process that is in charge of xmlhttprequests and handling
         iframe.src = url;
       } catch(ex) {
         callback(ex);
-      }
-    }
-  }
-
-  function closeIFrame(url) {
-    const iframe = document.body.getElementsByTagName('iframe');
-    for (let j = 0; j < iframe.length; j++) {
-      if (iframe[j].src === url) {
-        document.body.removeChild(iframe[j]);
-        $tw.browserMessaging.iframeInfoMap[url] = null;
       }
     }
   }
@@ -158,6 +149,10 @@ This is the background process that is in charge of xmlhttprequests and handling
     };
 
     window.addEventListener("message",function listener(event){
+      if (typeof $tw.windowMessageHandlers[event.data.verb] === 'function') {
+        $tw.windowMessageHandlers[event.data.verb](event);
+      }
+      /*
       switch(event.data.verb) {
         case "BUNDLE_REQUEST":
           if (event.data.bundleFunction) {
@@ -202,6 +197,7 @@ This is the background process that is in charge of xmlhttprequests and handling
           closeIFrame(event.data.origin);
           break;
       }
+      */
     },false);
 
   };
