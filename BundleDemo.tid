@@ -77,12 +77,43 @@ Filter:
     </option>
   </$list>
 </$select>
-
+<br/>
+<$checkbox
+  tiddler='$:/state/FederationCore/BundleDemo'
+  field='use_import'
+  checked='true'
+  unchecked='false'
+>
+  Use Native Import
+</$checkbox>
+<br/>
+<$checkbox
+  tiddler='$:/state/FederationCore/BundleDemo'
+  field='delete_bundle'
+  checked='true'
+  unchecked='false'
+>
+  Delete Bundle After Import
+</$checkbox>
+<br/>
+<$checkbox
+  tiddler='$:/state/FederationCore/BundleDemo'
+  field='overwrite'
+  checked='true'
+  unchecked='false'
+>
+  Overwrite Existing Tiddlers
+</$checkbox>
+<br/>
 <$button>
   Unbundle Tiddlers
   <$action-tiddlerbundle
     $action='unpack'
     $bundle={{$:/state/FederationCore/UnbundleName}}
+    $useImport={{$:/state/FederationCore/BundleDemo!!use_import}}
+    $filter={{$:/state/FederationCore/BundleDemo!!unbundle_filter}}
+    $delete={{$:/state/FederationCore/BundleDemo!!delete_bundle}}
+    $overwrite={{$:/state/FederationCore/BundleDemo!!overwrite}}
   />
 </$button>
 

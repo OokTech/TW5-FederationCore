@@ -29,6 +29,9 @@ This lists the existing bundles that have already been fetched:
 
 !! Unbundling
 
+See the [[Bundle Demo|$:/plugins/Federation/FederationCore/BundleDemo]] for
+more about bundles.
+
 <$select tiddler='$:/state/TWederation/UnbundleName'>
   <option
     value=''

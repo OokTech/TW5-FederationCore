@@ -3,10 +3,10 @@ caption: ReadMe
 
 !! What is this?
 
-This is the basic core for adding federation to tiddlywiki. This plugin has the
-back-end tools necessary to allow other wikis with this plugin to fetch
-tiddlers from this wiki, or to use this wiki to fetch tiddlers from other wikis
-with this plugin.
+This is the basic core for adding federation to tiddlywiki. This plugin has
+only the back-end tools necessary to allow other wikis with this plugin to
+fetch tiddlers from this wiki, or to use this wiki to fetch tiddlers from other
+wikis with this plugin.
 
 This plugin uses the `$action-tiddlerbundle` widget for part of its function.
 See the

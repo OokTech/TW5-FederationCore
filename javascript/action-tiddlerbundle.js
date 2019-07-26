@@ -17,6 +17,7 @@ Usage:
 |$action |Pack (create bundle) or unpack (unpack tiddlers) (Default: `Pack`)|
 |$type |`Tiddler` or `JSON` (Default: `Tiddler`) |
 |$delete |When unpacking a bundle, if this is set to `true` the bundle will be deleted after it is unpacked. (default: `false`) |
+|$useImport |If this is set to `true` than the built-in core import funciton is used when unbundling. (default: `false`) |
 
 \*/
 
@@ -71,6 +72,15 @@ ActionTiddlerBundle.prototype.refresh = function(changedTiddlers) {
   return this.refreshChildren(changedTiddlers);
 };
 
+function unpackTiddler(self, tiddler) {
+  if (self.useImport === 'true') {
+    tiddler = JSON.parse(JSON.stringify(tiddler))
+    self.dispatchEvent({type: "tm-import-tiddlers", param: JSON.stringify(tiddler)});
+  } else if (self.actionOverwrite || !self.wiki.getTiddler(tiddler.fields.title)) {
+    self.wiki.addTiddler(new $tw.Tiddler(tiddler.fields));
+  }
+}
+
 /*
 Invoke the action associated with this widget
 */
@@ -96,7 +106,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
         const currentBundleTiddler = this.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
         // Make the tiddler text and escape any places the separator strings
         // shows up in the tiddler.
-				const re = new RegExp(separator, 'g')
+        const re = new RegExp(separator, 'g')
         const tidText = (currentBundleTiddler.getFieldStringBlock({exclude: ["text"]}) + (!!currentBundleTiddler.fields.text ? "\n\n" + currentBundleTiddler.fields.text : "")).replace(re, '\\'+separator)
         bundleText += tidText + '\n' + separator + '\n';
       }
@@ -119,6 +129,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
     const self = this
     const filterOutput = this.filter ? true:false;
     const unpackList = (filterOutput)? this.wiki.filterTiddlers(this.filter): []
+    const unpackIt = (filterOutput === false || (unpackList.indexOf(tiddlerName) !== -1))
     const tiddler = $tw.wiki.getTiddler(this.actionBundle);
     if (tiddler) {
       //Get the raw text for the bundle.
@@ -126,14 +137,8 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
       if (tiddler.fields.bundle_type === 'JSON') {
         const bundleObject = JSON.parse(tiddler.fields.text);
         for (let tiddlerName in bundleObject) {
-          if (filterOutput === false || (unpackList.indexOf(tiddlerName) !== -1)) {
-            if (self.actionOverwrite || !self.wiki.getTiddler(tiddlerName)) {
-              if (self.useImport) {
-                $tw.wiki.importTiddler(new $tw.Tiddler(bundleObject[tiddlerName].fields));
-              } else {
-                self.wiki.addTiddler(new $tw.Tiddler(bundleObject[tiddlerName].fields));
-              }
-            }
+          if (unpackIt) {
+            unpackTiddler(self, bundleObject[tiddlerName])
           }
         }
       } else {
@@ -142,17 +147,11 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
         //Create a tiddler from each tiddler. Only overwrite existing tiddlers if this.actionOverwrite is true
         for (let i = 0; i < rawBundleTiddlers.length; i++) {
           if (rawBundleTiddlers[i].trim() !== '') {
-						const re = new RegExp('\\\\' + separator, 'g')
+            const re = new RegExp('\\\\' + separator, 'g')
             const tiddlers = this.wiki.deserializeTiddlers('.tid',rawBundleTiddlers[i].replace(re,separator));
             $tw.utils.each(tiddlers,function(tiddler) {
-              if (filterOutput === false || (unpackList.indexOf(tiddler.title) !== -1)) {
-                if (self.actionOverwrite || !self.wiki.getTiddler(tiddler.title)) {
-                  if (self.useImport) {
-                    $tw.wiki.importTiddler(new $tw.Tiddler(tiddler));
-                  } else {
-                    self.wiki.addTiddler(new $tw.Tiddler(tiddler));
-                  }
-                }
+              if (unpackIt) {
+                unpackTiddler(self, {fields: tiddler})
               }
             });
           }
