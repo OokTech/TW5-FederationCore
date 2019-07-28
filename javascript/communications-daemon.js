@@ -141,7 +141,7 @@ This is the background process that is in charge of xmlhttprequests and handling
               bundlename: event.paramObject.bundleName,
               separator: event.paramObject.separator,
               destination: url,
-              bundleFunction: event.paramObject.packingFunction,
+              bundleFunction: event.paramObject.bundleFunction,
             }, "*");
           }
         });

@@ -3,12 +3,19 @@ caption: Fetch Demo
 
 !! Fetching
 
-This is a url you can use for testing: `http://twederation.tiddlyspot.com`
-This filter works for testing: `[!is[system]limit[10]]`
+This is a url you can use for testing: `https://ooktech.xyz:8443/Public`
 
 Remote Wiki: <$edit-text tiddler='$:/state/TWederation/FetchTiddlers' field='url' class='tc-edit-texteditor'/>
 
+This filter works for testing: `[!is[system]limit[10]]`
+
 Filter: <$edit-text tiddler='$:/state/TWederation/FetchTiddlers' field='filter' class='tc-edit-texteditor'/>
+
+Bundle Name: <$edit-text tiddler='$:/state/TWederation/FetchTiddlers' field='bundle_name' class='tc-edit-texteditor'/>
+
+Bundle Function:
+<$radio tiddler='$:/state/TWederation/FetchTiddlers' field='bundle_function' value='bundleTiddlers'> Tiddler Bundle</$radio>
+<$radio tiddler='$:/state/TWederation/FetchTiddlers' field='bundle_function' value='JSONBundle'> JSON Bundle</$radio>
 
 <$button>
   Fetch Some Tiddlers
@@ -17,13 +24,16 @@ Filter: <$edit-text tiddler='$:/state/TWederation/FetchTiddlers' field='filter' 
     request_type='request_bundle'
     url={{$:/state/TWederation/FetchTiddlers!!url}}
     filter={{$:/state/TWederation/FetchTiddlers!!filter}}
-    bundleName="Look! A Name!"
+    bundleName={{$:/state/TWederation/FetchTiddlers!!bundle_name}}
+    bundleFunction={{$:/state/TWederation/FetchTiddlers!!bundle_function}}
   />
 </$button>
 
 This lists the existing bundles that have already been fetched:
 
-<$list filter='[tag[Tiddler Bundle]]'>
+<$list
+  filter='[tag[Tiddler Bundle]][tag[JSON Bundle]]'
+>
 
 </$list>
 
@@ -38,9 +48,13 @@ more about bundles.
   >
     No Bundle Selected
   </option>
-  <$list filter='[tag[Tiddler Bundle]]'>
+  <$list
+    filter='[tag[Tiddler Bundle]][tag[JSON Bundle]]'
+  >
     <option>
-      <$view field='title'/>
+      <$view
+        field='title'
+      />
     </option>
   </$list>
 </$select>
@@ -55,8 +69,12 @@ more about bundles.
 
 Titles in the bundle:
 
-<$list filter='[[$:/TiddlerBundleData/]addsuffix{$:/state/TWederation/UnbundleName}]'>
-  <$list filter='[list<currentTiddler>]'>
+<$list
+  filter='[[$:/TiddlerBundleData/]addsuffix{$:/state/TWederation/UnbundleName}]'
+>
+  <$list
+    filter='[list<currentTiddler>]'
+  >
 
   </$list>
 </$list>
