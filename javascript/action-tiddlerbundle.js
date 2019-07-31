@@ -85,14 +85,8 @@ function unpackTiddler(self, tiddler) {
 Invoke the action associated with this widget
 */
 ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
-  let separator;
-  if (this.actionSeparator) {
-    separator = this.actionSeparator;
-  } else {
-    separator = '<!-- TIDDLER SEPARATOR --!>'
-  }
-
   if (this.actionAction === 'pack') {
+    const separator = (typeof this.actionSeparator === 'undefined')?'<!-- TIDDLER SEPARATOR --!>':this.actionSeparator;
     const bundleType = this.bundleType ? this.bundleType:'Tiddler';
     const bundleFilter = this.filter;
     const bundleTiddlers = this.wiki.filterTiddlers(bundleFilter);
@@ -131,6 +125,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
     const unpackList = (filterOutput)? this.wiki.filterTiddlers(this.filter): []
     const unpackIt = (filterOutput === false || (unpackList.indexOf(tiddlerName) !== -1))
     const tiddler = $tw.wiki.getTiddler(this.actionBundle);
+    const separator = (typeof tiddler.fields.separator === 'undefined')?'<!-- TIDDLER SEPARATOR --!>':tiddler.fields.separator;
     if (tiddler) {
       //Get the raw text for the bundle.
       const bundleText = tiddler.getFieldString('text');

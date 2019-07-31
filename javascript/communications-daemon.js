@@ -152,52 +152,6 @@ This is the background process that is in charge of xmlhttprequests and handling
       if (typeof $tw.windowMessageHandlers[event.data.verb] === 'function') {
         $tw.windowMessageHandlers[event.data.verb](event);
       }
-      /*
-      switch(event.data.verb) {
-        case "BUNDLE_REQUEST":
-          if (event.data.bundleFunction) {
-            const bundleFunction = $tw.wiki.bundleFunction[event.data.bundleFunction];
-            if (typeof bundleFunction === "function") {
-              bundleFunction(event, 'Ok');
-            } else {
-              //If an invalid is given use the default function
-              $tw.wiki.bundleFunction.bundleTiddlers(event, 'invalid bundle function given, using default function as fallback. Bundle function: ' + event.data.bundleFunction);
-            }
-          } else {
-            //If no bundleFunction is given use the default function
-            $tw.wiki.bundleFunction.bundleTiddlers(event, 'no bundle function given, used default.');
-          }
-          break;
-        case "DELIVER_BUNDLE":
-          //Check to see if the bundle is empty, if so don't save it
-          if (event.data.bundle.text != '' && event.data.bundle.list != '') {
-            //If the source isn't recognized than set the tiddler as plain text and marke it as having an unrecognized source.
-            event.data.bundle.type = 'text/plain';
-            event.data.bundle.source = 'unrecognized';
-            event.data.bundle.title = event.data.bundle.title + ' - ' + event.data.origin;
-            $tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
-            //We need to create the history tiddler even if we don't have a recognized source.
-            //var creationFields = $tw.wiki.getCreationFields();
-            let historyTiddler = $tw.wiki.getTiddler('$:/FetchHistory/' + event.data.origin);
-						let newText = {};
-            if (historyTiddler) {
-              newText = JSON.parse(historyTiddler.fields.text);
-              newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
-            } else {
-              newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
-              historyTiddler = {
-                title: '$:/FetchHistory/' + event.data.origin,
-                type: 'application/json',
-                text: ''
-              };
-            }
-            $tw.wiki.addTiddler(new $tw.Tiddler(historyTiddler, {text: JSON.stringify(newText)}));
-          }
-          $tw.wiki.addTiddler(new $tw.Tiddler($tw.wiki.getCreationFields(),{title: '$:/TiddlerBundleData/' + event.data.bundle.title, list: event.data.bundle.list, text: "Source: {{!!source}}<br>Tiddlers: <$list filter='[list[]]'><$link to=<<currentTiddler>>><$view field='title'/></$link>, </$list>", tags: '$:/tags/TiddlerBundle', source: event.origin}));
-          closeIFrame(event.data.origin);
-          break;
-      }
-      */
     },false);
 
   };

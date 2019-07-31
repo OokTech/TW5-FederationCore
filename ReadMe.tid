@@ -20,6 +20,7 @@ See the
 |!filter |The filter used to determine which tiddlers from the remote wiki are returned. (Default: `[is[system]!is[system]]` so nothing is returned) |
 |!bundleName |The name of the tiddler returned as the bundle. (`Default Bundle` for bundles that use the `Tiddler` packing, `JSON Bundle` for bundles that use `JSONBundle` for the bundle function.) |
 |!bundleFunction |The function you want used to bundle the returned tiddlers. By default the options are `bundleTiddlers` and `JSONBundle` (Default: `bundleTiddlers`) |
+|!bundleHandler |The name of the bundle handler to use with the returned bundle. Only `default` is in the FederationCore plugins, other handlers will be in other plugins. (Default: `default`)|
 |!separator |The string used to separate the tiddler text in the bundle when `bundleTiddlers` is used. This should never have to be changed. (Default: `<!-- TIDDLER SEPARATOR --!>`) |
 
 !! How do I do anything with this?

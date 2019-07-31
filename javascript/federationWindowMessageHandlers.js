@@ -39,6 +39,8 @@ function closeIFrame(url) {
 }
 
 $tw.windowMessageHandlers = $tw.windowMessageHandlers || {};
+$tw.bundleHandler = $tw.bundleHandler || {};
+
 $tw.windowMessageHandlers.BUNDLE_REQUEST = function (event) {
   if (event.data.bundleFunction) {
     const bundleFunction = $tw.wiki.bundleFunction[event.data.bundleFunction];
@@ -53,7 +55,22 @@ $tw.windowMessageHandlers.BUNDLE_REQUEST = function (event) {
     $tw.wiki.bundleFunction.bundleTiddlers(event, 'no bundle function given, used default.');
   }
 }
+
 $tw.windowMessageHandlers.DELIVER_BUNDLE = function (event) {
+  event.data = event.data || {};
+  event.data.bundle = event.data.bundle || {};
+  if (event.data.bundle.handler) {
+    $tw.bundleHandler[event.data.bundle.handler](event)
+  } else {
+    $tw.bundleHandler['default'](event)
+  }
+  closeIFrame(event.data.origin);
+}
+
+/*
+  The default bundle handler
+*/
+$tw.bundleHandler.default = function(event) {
   //Check to see if the bundle is empty, if so don't save it
   if (event.data.bundle.text != '' && event.data.bundle.list != '') {
     //If the source isn't recognized than set the tiddler as plain text and marke it as having an unrecognized source.
@@ -62,7 +79,6 @@ $tw.windowMessageHandlers.DELIVER_BUNDLE = function (event) {
     event.data.bundle.title = event.data.bundle.title + ' - ' + event.data.origin;
     $tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
     //We need to create the history tiddler even if we don't have a recognized source.
-    //var creationFields = $tw.wiki.getCreationFields();
     let historyTiddler = $tw.wiki.getTiddler('$:/FetchHistory/' + event.data.origin);
     let newText = {};
     if (historyTiddler) {
@@ -79,6 +95,6 @@ $tw.windowMessageHandlers.DELIVER_BUNDLE = function (event) {
     $tw.wiki.addTiddler(new $tw.Tiddler(historyTiddler, {text: JSON.stringify(newText)}));
   }
   $tw.wiki.addTiddler(new $tw.Tiddler($tw.wiki.getCreationFields(),{title: '$:/TiddlerBundleData/' + event.data.bundle.title, list: event.data.bundle.list, text: "Source: {{!!source}}<br>Tiddlers: <$list filter='[list[]]'><$link to=<<currentTiddler>>><$view field='title'/></$link>, </$list>", tags: '$:/tags/TiddlerBundle', source: event.origin}));
-  closeIFrame(event.data.origin);
 }
+
 })();
