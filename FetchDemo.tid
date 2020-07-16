@@ -3,7 +3,7 @@ caption: Fetch Demo
 
 !! Fetching
 
-This is a url you can use for testing: `https://ooktech.xyz:8443/Public`
+This is a url you can use for testing: `https://ooktech-tw/plugins/federationcore/`
 
 Remote Wiki: <$edit-text tiddler='$:/state/TWederation/FetchTiddlers' field='url' class='tc-edit-texteditor'/>
 
