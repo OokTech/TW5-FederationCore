@@ -2,7 +2,7 @@
 	"title": "$:/plugins/Federation/FederationCore",
 	"description": "Federation: The core part of federation",
 	"author": "OokTech",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"core-version": ">=5.1.19",
 	"source": "",
 	"list": "ReadMe ActionTiddlerBundleReadMe FetchDemo BundleDemo HowDoesItWork",

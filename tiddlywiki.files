@@ -1,0 +1,30 @@
+{
+    "directories": [
+        {
+            "path": "./javascript",
+            "isTiddlerFile": true
+        }
+    ],
+    "tiddlers": [
+        {
+            "file": "./ActionTiddlerBundleReadMe.tid",
+            "isTiddlerFile": true
+        },
+        {
+            "file": "./BundleDemo.tid",
+            "isTiddlerFile": true
+        },
+        {
+            "file": "./FetchDemo.tid",
+            "isTiddlerFile": true
+        },
+        {
+            "file": "./HowDoesItWork.tid",
+            "isTiddlerFile": true
+        },
+        {
+            "file": "./ReadMe.tid",
+            "isTiddlerFile": true
+        }
+    ]
+}

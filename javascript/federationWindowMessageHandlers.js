@@ -42,29 +42,35 @@ $tw.windowMessageHandlers = $tw.windowMessageHandlers || {};
 $tw.bundleHandler = $tw.bundleHandler || {};
 
 $tw.windowMessageHandlers.BUNDLE_REQUEST = function (event) {
-  if (event.data.bundleFunction) {
+  console.log(1)
+  if (event.data.bundleFunction && event.data.bundleFunction.trim() !== '') {
+    console.log(3)
     const bundleFunction = $tw.wiki.bundleFunction[event.data.bundleFunction];
     if (typeof bundleFunction === "function") {
+      console.log(3)
       bundleFunction(event, 'Ok');
     } else {
+      console.log(4)
       //If an invalid is given use the default function
       $tw.wiki.bundleFunction.bundleTiddlers(event, 'invalid bundle function given, using default function as fallback. Bundle function: ' + event.data.bundleFunction);
     }
   } else {
+    console.log(5)
     //If no bundleFunction is given use the default function
     $tw.wiki.bundleFunction.bundleTiddlers(event, 'no bundle function given, used default.');
   }
 }
 
 $tw.windowMessageHandlers.DELIVER_BUNDLE = function (event) {
-  event.data = event.data || {};
-  event.data.bundle = event.data.bundle || {};
-  if (event.data.bundle.handler) {
-    $tw.bundleHandler[event.data.bundle.handler](event)
+  const thisEvent = JSON.parse(JSON.stringify(event));
+  thisEvent.data = thisEvent.data || {};
+  thisEvent.data.bundle = thisEvent.data.bundle || {};
+  if (thisEvent.data.bundle.handler) {
+    $tw.bundleHandler[thisEvent.data.bundle.handler](thisEvent)
   } else {
-    $tw.bundleHandler['default'](event)
+    $tw.bundleHandler['default'](thisEvent)
   }
-  closeIFrame(event.data.origin);
+  closeIFrame(thisEvent.data.origin);
 }
 
 /*

@@ -120,6 +120,7 @@ This is the background process that is in charge of xmlhttprequests and handling
         //There is already a queued request for that url. Ignore it for now to prevent repeated requests but we need to come up with a more elegant way to handle this in the future.
         console.log('There is already a request for that URL');
       } else {
+        console.log('making a request to', event.paramObject.url)
         //The event is placed into the event queue object to be handled by the daemon
         $tw.wiki.event_queue[event.paramObject.url] = {'type':'request_bundle','data':event};
       }
@@ -135,6 +136,7 @@ This is the background process that is in charge of xmlhttprequests and handling
           if(err) {
             alert("Error loading tiddler bundle: " + url);
           } else {
+            alert("Loaded Iframe")
             iframeInfo.domNode.contentWindow.postMessage({
               verb: "BUNDLE_REQUEST",
               filter: event.paramObject.filter,
@@ -147,12 +149,14 @@ This is the background process that is in charge of xmlhttprequests and handling
         });
       }
     };
-
-    window.addEventListener("message",function listener(event){
+    console.log('ponato')
+    window.addEventListener("message",function (event) {
+      console.log('HERE')
       if (typeof $tw.windowMessageHandlers[event.data.verb] === 'function') {
+        console.log('THERE')
         $tw.windowMessageHandlers[event.data.verb](event);
       }
     },false);
-
+    console.log('potato')
   };
 })();
